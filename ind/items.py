@@ -9,6 +9,8 @@ import scrapy
 
 
 class IndItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    Date = scrapy.Field()
+    Price = scrapy.Field()
+    UniqueId = scrapy.Field()
+    Region = scrapy.Field()
+    CommodityID = scrapy.Field()
