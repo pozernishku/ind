@@ -6,3 +6,6 @@
 *.log
 *.xlsx
 *.docx
+/build/*
+/project.egg-info/*
+setup.py
