@@ -11,8 +11,8 @@ class IndSpSpider(scrapy.Spider):
     allowed_domains = ['fcainfoweb.nic.in']
 
     def start_requests(self):
-        start_date = date(2010, 1, 1)
-        end_date = date(2010, 1, 3)
+        start_date = date(2010, 1, 4)
+        end_date = date(2010, 1, 6)
 
         for d in (start_date + timedelta(n) for n in range((end_date - start_date).days + 1)):
             yield FormRequest('https://fcainfoweb.nic.in/Reports/Report_Menu_Web.aspx',
