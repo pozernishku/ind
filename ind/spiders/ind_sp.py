@@ -8,10 +8,10 @@ from datetime import timedelta, date
 
 class IndSpSpider(scrapy.Spider):
     name = 'ind_sp'
-    allowed_domains = ['fcainfoweb.nic.in']
+    allowed_domains = ['fcainfoweb.nic.in', 'www.google.com']
 
     def start_requests(self):
-        yield scrapy.Request('https://fcainfoweb.nic.in/Reports/Report_Menu_Web.aspx', callback=self.parse)
+        yield scrapy.Request('https://www.google.com/', callback=self.parse)
 
     def parse(self, response):
         start_date = date(2010, 1, 4)
