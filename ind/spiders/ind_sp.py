@@ -11,6 +11,9 @@ class IndSpSpider(scrapy.Spider):
     allowed_domains = ['fcainfoweb.nic.in']
 
     def start_requests(self):
+        yield scrapy.Request('https://fcainfoweb.nic.in/', callback=self.parse)
+
+    def parse(self, response):
         start_date = date(2010, 1, 4)
         end_date = date(2010, 1, 6)
 
@@ -30,13 +33,13 @@ class IndSpSpider(scrapy.Spider):
                                         'ctl00$MainContent$Ddl_Rpt_Option0': 'Daily Prices',
                                         'ctl00$MainContent$Txt_FrmDate': d.strftime('%d/%m/%Y'),
                                         'ctl00$MainContent$btn_getdata1': 'Get Data'},
-                            callback=self.parse,
+                            callback=self.parse_deltafetch,
                             dont_filter=True,
                             meta={'max_retry_times': 15,
                                   'download_timeout': 600,
                                   'Date': d.strftime('%d/%m/%Y')})
 
-    def parse(self, response):
+    def parse_deltafetch(self, response):
         regs = [('DELHI', 'Delhi'),
                 ('AHMEDABAD', 'Ahmedabad'),
                 ('MUMBAI', 'Mumbai'),
