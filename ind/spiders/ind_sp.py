@@ -31,7 +31,7 @@ class IndSpSpider(scrapy.Spider):
                                         'ctl00$MainContent$Txt_FrmDate': d.strftime('%d/%m/%Y'),
                                         'ctl00$MainContent$btn_getdata1': 'Get Data'},
                             callback=self.parse,
-                            # dont_filter=True,
+                            dont_filter=True,
                             meta={'max_retry_times': 15,
                                   'download_timeout': 600,
                                   'Date': d.strftime('%d/%m/%Y')})
