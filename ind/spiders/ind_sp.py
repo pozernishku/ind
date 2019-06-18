@@ -37,7 +37,8 @@ class IndSpSpider(scrapy.Spider):
                             dont_filter=True,
                             meta={'max_retry_times': 15,
                                   'download_timeout': 600,
-                                  'Date': d.strftime('%d/%m/%Y')})
+                                  'Date': d.strftime('%d/%m/%Y'),
+                                  'deltafetch_key': d.strftime('%d/%m/%Y')})
 
     def parse_deltafetch(self, response):
         regs = [('DELHI', 'Delhi'),
@@ -70,7 +71,12 @@ class IndSpSpider(scrapy.Spider):
                  'INDAGM-potato',
                  'INDAGM-onion',
                  'INDAGM-tomato']
-
+        self.log('>>>')
+        self.log(response.url)
+        self.log(response.request.method)
+        self.log(response.request.body)
+        self.log(response.headers)
+        self.log(response.meta.get('Date'))
         # Data does not exist for this date
         if response.xpath('//*[contains(text(), "Sorry, Data does not exist for this date")]'):
             return None
