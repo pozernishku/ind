@@ -3,7 +3,7 @@ import scrapy
 from scrapy.http import FormRequest
 from ind.items import IndItem
 from datetime import timedelta, date
-
+import logging
 
 
 class IndSpSpider(scrapy.Spider):
@@ -71,14 +71,11 @@ class IndSpSpider(scrapy.Spider):
                  'INDAGM-potato',
                  'INDAGM-onion',
                  'INDAGM-tomato']
-        self.log('>>>')
-        self.log(response.url)
-        self.log(response.request.method)
-        self.log(response.request.body)
-        self.log(response.headers)
-        self.log(response.meta.get('Date'))
+
         # Data does not exist for this date
         if response.xpath('//*[contains(text(), "Sorry, Data does not exist for this date")]'):
+            self.log('>>>', level=logging.INFO)
+            self.log('It should try to re-scrape next time the spider runs (deltafetch) -- ' + response.meta.get('Date'), level=logging.INFO)
             return None
 
         # Items by Region
