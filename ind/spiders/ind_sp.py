@@ -11,7 +11,7 @@ class IndSpSpider(scrapy.Spider):
     allowed_domains = ['fcainfoweb.nic.in']
 
     def start_requests(self):
-        yield scrapy.Request('https://fcainfoweb.nic.in/', callback=self.parse)
+        yield scrapy.Request('https://fcainfoweb.nic.in/Reports/Report_Menu_Web.aspx', callback=self.parse)
 
     def parse(self, response):
         start_date = date(2010, 1, 4)
