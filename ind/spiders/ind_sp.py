@@ -14,7 +14,7 @@ class IndSpSpider(scrapy.Spider):
         yield scrapy.Request('https://www.google.com/', callback=self.parse)
 
     def parse(self, response):
-        start_date = date(2010, 1, 4)
+        start_date = date(2010, 1, 1)
         end_date = date(2010, 1, 6)
 
         for d in (start_date + timedelta(n) for n in range((end_date - start_date).days + 1)):
