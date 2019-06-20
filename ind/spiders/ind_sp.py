@@ -14,8 +14,14 @@ class IndSpSpider(scrapy.Spider):
         yield scrapy.Request('https://www.google.com/', callback=self.parse)
 
     def parse(self, response):
-        start_date = date(2010, 1, 1)
-        end_date = date(2010, 1, 6)
+        start_date = getattr(self, 'start_date', date(2010, 1, 1))
+        end_date = getattr(self, 'end_date', date.today())
+
+        start_date = date(*list(map(int, start_date.split('/')))[::-1]) if type(start_date) == str else start_date
+        end_date = date(*list(map(int, end_date.split('/')))[::-1]) if type(end_date) == str else end_date
+
+        self.log('Start date: ' + str(start_date), level=logging.INFO)
+        self.log('End date: ' + str(end_date), level=logging.INFO)
 
         for d in (start_date + timedelta(n) for n in range((end_date - start_date).days + 1)):
             yield FormRequest('https://fcainfoweb.nic.in/Reports/Report_Menu_Web.aspx',
@@ -74,8 +80,7 @@ class IndSpSpider(scrapy.Spider):
 
         # Data does not exist for this date
         if response.xpath('//*[contains(text(), "Sorry, Data does not exist for this date")]'):
-            self.log('>>>', level=logging.INFO)
-            self.log('It should try to re-scrape next time the spider runs (deltafetch) -- ' + response.meta.get('Date'), level=logging.INFO)
+            self.log('It should try to re-scrape next time the spider runs (deltafetch) - ' + response.meta.get('Date'), level=logging.INFO)
             return None
 
         # Items by Region
